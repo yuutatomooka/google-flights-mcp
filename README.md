@@ -1,21 +1,23 @@
 # Google Flights MCP Server
 
-`fast-flights` を使ってフライト検索を行う MCP サーバです。
+MCP server for flight search and trip-planning workflows powered by `fast-flights`.
+
+For Japanese documentation, see [README.ja.md](./README.ja.md).
 
 ## Features
 
-- One-way / Round-trip flight search
-- Airport code search
-- Suggested travel dates
-- Airport DB update (CSV fetch + local cache)
+- One-way and round-trip flight search
+- Airport code/city lookup
+- Suggested travel date helper
+- Airport database refresh from a public CSV source
 
 ## Requirements
 
 - Python 3.11+
 - `uv` (recommended) or `pip`
-- Playwright Chromium browser (required for `fetch_mode="local"`)
+- Playwright Chromium browser (required because this server uses `fetch_mode="local"`)
 
-## Quick Start (Local)
+## Quick Start
 
 ```bash
 cd /path/to/google-flights-mcp
@@ -24,7 +26,7 @@ uv run playwright install chromium
 uv run google-flights-mcp
 ```
 
-`pip` の場合:
+Using `pip` instead:
 
 ```bash
 cd /path/to/google-flights-mcp
@@ -33,14 +35,11 @@ python -m playwright install chromium
 google-flights-mcp
 ```
 
-## Why Playwright Is Required
+## Integrations
 
-このサーバーは `fetch_mode="local"` で Google Flights を取得します。  
-そのため `playwright` と `chromium` が未インストールだと検索が失敗します。
+### Claude Desktop
 
-## Claude Desktop Integration
-
-`~/Library/Application Support/Claude/claude_desktop_config.json`:
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
@@ -58,26 +57,9 @@ google-flights-mcp
 }
 ```
 
-設定後に Claude Desktop を再起動してください。
+Restart Claude Desktop after saving.
 
-## Codex Integration
-
-Codex config (`~/.codex/config.toml`) 例:
-
-```toml
-[mcp_servers.google-flights]
-command = "uv"
-args = ["--directory", "/ABSOLUTE/PATH/google-flights-mcp", "run", "google-flights-mcp"]
-```
-
-または PATH に入っている場合:
-
-```toml
-[mcp_servers.google-flights]
-command = "google-flights-mcp"
-```
-
-## Msty Studio Integration (STDIO / JSON)
+### Msty Studio (STDIO / JSON)
 
 ```json
 {
@@ -90,6 +72,10 @@ command = "google-flights-mcp"
   ]
 }
 ```
+
+### Codex
+
+See [CODEX_GUIDE.md](./CODEX_GUIDE.md).
 
 ## Available Tools
 
@@ -110,7 +96,7 @@ command = "google-flights-mcp"
 
 ## Legacy Entrypoint
 
-互換のため `src/flights-mcp-server.py` も残しています（内部的には同じ `google_flights_mcp.main()` を呼び出します）。
+`src/flights-mcp-server.py` remains for backward compatibility and delegates to `google_flights_mcp.main()`.
 
 ## License
 
