@@ -98,6 +98,10 @@ Codexでの利用ガイド（自動セットアップ用プロンプト付き）
 
 `src/flights-mcp-server.py` は後方互換のため残しています。内部では `google_flights_mcp.main()` を呼び出します。
 
+## 謝辞
+
+このプロジェクトは `salamentic` 氏のオリジナル Flight Planner MCP サーバをベースにしています。ご提供いただいた実装に感謝します。
+
 ## ライセンス
 
 MIT

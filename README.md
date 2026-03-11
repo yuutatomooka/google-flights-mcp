@@ -98,6 +98,10 @@ See [CODEX_GUIDE.md](./CODEX_GUIDE.md).
 
 `src/flights-mcp-server.py` remains for backward compatibility and delegates to `google_flights_mcp.main()`.
 
+## Acknowledgments
+
+Thanks to `salamentic` for the original Flight Planner MCP server that made this fork possible.
+
 ## License
 
 MIT
