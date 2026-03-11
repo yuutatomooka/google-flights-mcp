@@ -1,8 +1,15 @@
 # Google Flights MCP Server
 
-Flight search and travel-planning MCP functionality built on top of `fast-flights`. This repo wraps FastMCP to expose tools for searching fares, looking up airports, and generating travel prompts; the underlying Google Flights fetch uses `fetch_mode="local"` to avoid third-party tokens.
+[![Stars](https://img.shields.io/github/stars/yuutatomooka/google-flights-mcp?style=social)](https://github.com/yuutatomooka/google-flights-mcp)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+<br>
+Flight search and travel-planning MCP functionality built on `fast-flights`. This project already bundles Claude/Msty/Codex guides, makes `fetch_mode="local"` the default, and keeps a single `uv`/Python entry point for tooling.
 
-Refer to [README.ja.md](./README.ja.md) for the Japanese translation.
+## ⭐ Quick actions
+
+1. `uv run google-flights-mcp` – launches the FastMCP server after loading the airport cache.
+2. `uv run playwright install chromium` – required before the flight search tools work.
+3. Use the Codex prompt in [CODEX_GUIDE.md](./CODEX_GUIDE.md) when onboarding this repo for automation tasks.
 
 ## Table of Contents
 
@@ -17,16 +24,16 @@ Refer to [README.ja.md](./README.ja.md) for the Japanese translation.
 
 ## Features
 
-- One-way and round-trip flight search with prioritised results tagging.
-- Airport code / city lookups using the cached database.
-- Suggested travel date helper that returns a departure/return range.
-- Airport database refresh from the upstream CSV source via `update_airports_database`.
+- One-way and round-trip flight search with best-option tagging.
+- Airport/city lookup backed by a local cache (`airports_cache.json`).
+- `get_travel_dates` helper for quick date suggestions.
+- `update_airports_database` refreshes the cache directly from the upstream CSV.
 
 ## Requirements
 
 - Python 3.11+
 - `uv` (recommended) or `pip`
-- Playwright Chromium browser (required because this server scrapes Google Flights locally)
+- Playwright & Chromium (initialise via `playwright install chromium` before running the server)
 
 ## Quick Start
 
@@ -37,7 +44,7 @@ uv run playwright install chromium
 uv run google-flights-mcp
 ```
 
-If you prefer plain `pip`:
+Or with direct `pip`:
 
 ```bash
 cd /path/to/google-flights-mcp
@@ -46,13 +53,13 @@ python -m playwright install chromium
 google-flights-mcp
 ```
 
-`google-flights-mcp` is a console script that launches `python -m google_flights_mcp`, initialises the airport cache, and keeps FastMCP running for incoming tool invocations.
+The `google-flights-mcp` console script simply runs `python -m google_flights_mcp`, which initialises airports and launches FastMCP for incoming tool calls.
 
 ## Integrations
 
 ### Claude Desktop
 
-Add this block to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+Insert or update this block inside `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
@@ -70,7 +77,7 @@ Add this block to `~/Library/Application Support/Claude/claude_desktop_config.js
 }
 ```
 
-Restart Claude Desktop afterwards.
+Restart Claude Desktop after editing.
 
 ### Msty Studio (STDIO / JSON)
 
@@ -88,17 +95,17 @@ Restart Claude Desktop afterwards.
 
 ### Codex
 
-See [CODEX_GUIDE.md](./CODEX_GUIDE.md) for the prompt that automates cloning, dependency install, and MCP configuration.
+See [CODEX_GUIDE.md](./CODEX_GUIDE.md) for the prompt that clones this repo, installs dependencies, and updates your Codex MCP config automatically.
 
 ## Tools, Resources & Prompts
 
-- Tools: `search_flights`, `airport_search`, `get_travel_dates`, `update_airports_database`
-- Resources: `airports://all`, `airports://{code}`
-- Prompts: `plan_trip`, `compare_destinations`
+- Tools: `search_flights`, `airport_search`, `get_travel_dates`, `update_airports_database`.
+- Resources: `airports://all`, `airports://{code}`.
+- Prompts: `plan_trip`, `compare_destinations`.
 
 ## Legacy Entrypoint
 
-`src/flights-mcp-server.py` remains for backward compatibility and delegates to `google_flights_mcp.main()`.
+`src/flights-mcp-server.py` is retained for compatibility and delegates to `google_flights_mcp.main()`.
 
 ## Acknowledgments
 
