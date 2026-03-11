@@ -1,4 +1,4 @@
-from google_flights_mcp import main
+from . import main
 
 
 if __name__ == "__main__":
