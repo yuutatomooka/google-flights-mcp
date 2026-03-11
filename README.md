@@ -5,6 +5,8 @@
 <br>
 Flight search and travel-planning MCP functionality built on `fast-flights`. This project already bundles Claude/Msty/Codex guides, makes `fetch_mode="local"` the default, and keeps a single `uv`/Python entry point for tooling.
 
+日本語ドキュメントは [README.ja.md](./README.ja.md) です。
+
 ## ⭐ Quick actions
 
 1. `uv run google-flights-mcp` – launches the FastMCP server after loading the airport cache.
